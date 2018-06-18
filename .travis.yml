@@ -4,70 +4,57 @@ sudo: required
 dist: trusty
 services: docker
 osx_image: xcode6.4
-
 env:
   global:
-      - RC=rc3
-      - VERSION=2.4.0
-      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/
-      - ZIP_FILE=apache-beam-${VERSION}-python.zip
-
-      - PLAT=x86_64
-      - WHEELHOUSE_UPLOADER_USERNAME=apache-beam-travis
-      - BUILD_DEPENDS="Cython"
-      - TEST_DEPENDS=
-      # Following generated with
-      # travis encrypt -r robertwb/apache-beam-wheels WHEELHOUSE_UPLOADER_SECRET=$WHEELHOUSE_UPLOADER_SECRET
-      - secure: "F4w+VJHE1Lor/RQKzg5+RtvtD0qKf7dBA0egQRjLokFC/grBE21NraQmy0bkmLMmk2CXd8eMiWyWI4hxrMFQitMPBxT4r0rzhF3UVOH5s3YqNgvNL9Fqx0GdVB4YTcOL746ozj48u8klpUAkhpX/WQHeuCyzuPUW+QINQSnUxpaMAIVAmPJbr5lHgqvKnOGHzbHuVX+Fokh43goeuvxjMHINHR0Nq9k+g2yJgDIa1HOiK+TtNzDcWa/QiAZUYxOKptt/9MJfs8+fO2gyAL9AAuyLF+MiJ3xo21o39tHPduQ102rJvgWYhNgzgD26H7D1vnTLodLqh/uXZiD0tAl1nnCaAxk74cKut2DxdmVhpLyt8HpbMKI1kSfpuT1qEhBxTgT/eBSNj4kdKpZgs3eRqnkXzuY0udyTO2I4ckwzYijOQB80Jf/5hC1ovq1ukGgFtdBYY23zyw6/iNeBnsKtj3XYxL7ACRPtT8IgPL8H9xp30eepwubjBJQ0srdnmadgaV8lmdbt73r9/7PCSYc6rjsg0yTFQCDRR6ZiR+yoQCzvw9bjp4bhypXZMt/MF3KsKnxWycsMIkdBRiokVGjTfrc9v+36xPMBsILch5SGZKk+jVySBuNqzpvI5BwZ9vjLxZXupnUhl3K/JctgPtkx2jHLjuvhcJrmeE+1O6tRCC4="
-
-
+  - RC=rc2
+  - VERSION=2.5.0
+  - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/
+  - ZIP_FILE=apache-beam-${VERSION}-python.zip
+  - PLAT=x86_64
+  - WHEELHOUSE_UPLOADER_USERNAME=apache-beam-travis
+  - BUILD_DEPENDS="Cython"
+  - TEST_DEPENDS=
 matrix:
   exclude:
-    # Exclude the default Python 3.5 build
-    - python: 3.5
+  - python: 3.5
   include:
-   - os: osx
-     language: generic
-     env:
-       - MB_PYTHON_VERSION=2.7
-   - os: linux
-     env:
-       - MB_PYTHON_VERSION=2.7
-   - os: linux
-     env:
-       - MB_PYTHON_VERSION=2.7
-       - UNICODE_WIDTH=16
-   - os: linux
-     env:
-       - MB_PYTHON_VERSION=2.7
-       - PLAT=i686
-   - os: linux
-     env:
-       - MB_PYTHON_VERSION=2.7
-       - PLAT=i686
-       - UNICODE_WIDTH=16
-
+  - os: osx
+    language: generic
+    env:
+    - MB_PYTHON_VERSION=2.7
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=2.7
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=2.7
+    - UNICODE_WIDTH=16
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=2.7
+    - PLAT=i686
+  - os: linux
+    env:
+    - MB_PYTHON_VERSION=2.7
+    - PLAT=i686
+    - UNICODE_WIDTH=16
 before_install:
-    - source multibuild/common_utils.sh
-    - source multibuild/travis_steps.sh
-    - before_install
-
+- source multibuild/common_utils.sh
+- source multibuild/travis_steps.sh
+- before_install
 install:
-    - wget $STAGING/$ZIP_FILE
-    - unzip $ZIP_FILE
-
+- wget $STAGING/$ZIP_FILE
+- unzip $ZIP_FILE
 script:
-    - build_wheel apache-beam-${VERSION} $PLAT
-
+- build_wheel apache-beam-${VERSION} $PLAT
 after_success:
-    - TRAVIS_BUILD_DIR=.
-    - ls -lh ${TRAVIS_BUILD_DIR}/wheelhouse/
-    - pip install twine
-    - pip install pyOpenSSL ndg-httpsclient pyasn1
-    # Even the test pipy won't let you re-upload a pacakge under the same name.
-    - |
-      for artifact in ${TRAVIS_BUILD_DIR}/wheelhouse/*.*; do
-          mv $artifact ${artifact/$VERSION/$VERSION.$RC};
-      done
-    - source deploy_travis.sh
-    - deploy
+- TRAVIS_BUILD_DIR=.
+- ls -lh ${TRAVIS_BUILD_DIR}/wheelhouse/
+deploy:
+  provider: gcs
+  access_key_id: GOOGVZ6DVJJWJEV3VOXFSBIZ
+  secret_access_key:
+    secure: gKwvDhRIzyPEwiU2qqfWrmQ/1I8mcPh4pqZgPOpPb3n5R8xwjvV+4xh+F5S/OlIJ3ky3j1FpgSZQGCeTrPvFPuWHiAEtac3+8eBOSK30cGKjSu5XkdzuFhCJB+CxqhiTIlyOZkBI8AMODVh0LvfXCOScYISOedhPsU1WxBdcYmlc+ZgDXfEM9ODroRgTx/s29sPlkuOGkno9R/OOAr3siVGjzY1f7JfLReU8tDolDgA9aH/ug2crmtNQWMEt1EKj412kzJSr/PiMAhi5aIxpVJmEhMt+JBFmaHr/xPDhzadEOJdEdkuEToXwLOkwdfjhQx4SC84YdPRPh1wetdVzQjTjqOjttIHtryVs6zqHwDbjga60gC2w2XccBbo6idnxtb+SFrnktoo+qk1yOdY26MKGZDCucnKhkVypANt3U/ZfS7uLvc+bHZOxoyRxfz5zQ4yhi351TsrwUtrUciHk+933OJumJfyufhB8jeikZQ/2Det7tVp98aKe4Q9ITiIbNGnBJEevFxDf67t8/oPXCTeQ+IoRWR2RS9wenvBVuLT98Ltb6XuQfD+iAugw4NSIV/D0qpCsFakNNyIxosjgR5JMe14rFuqdK/iA9TCVLYwnw2JknlAa5TZHpn9qVNTNAlrhVnRTtwfA/Q2Fgm2Nw2WIcIBH9adgsgWYOxzsOeI=
+  bucket: python_wheels
+  skip_cleanup: True 
+  local-dir: ${TRAVIS_BUILD_DIR}/wheelhouse/
