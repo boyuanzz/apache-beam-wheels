@@ -7,18 +7,18 @@ osx_image: xcode6.4
 
 env:
   global:
-      - RC=rc3
-      - VERSION=2.4.0
+      - RC=rc2
+      - VERSION=2.5.0
       - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/
       - ZIP_FILE=apache-beam-${VERSION}-python.zip
 
       - PLAT=x86_64
-      - WHEELHOUSE_UPLOADER_USERNAME=apache-beam-travis
+      - WHEELHOUSE_UPLOADER_USERNAME=boyuanz
       - BUILD_DEPENDS="Cython"
       - TEST_DEPENDS=
       # Following generated with
       # travis encrypt -r robertwb/apache-beam-wheels WHEELHOUSE_UPLOADER_SECRET=$WHEELHOUSE_UPLOADER_SECRET
-      - secure: "F4w+VJHE1Lor/RQKzg5+RtvtD0qKf7dBA0egQRjLokFC/grBE21NraQmy0bkmLMmk2CXd8eMiWyWI4hxrMFQitMPBxT4r0rzhF3UVOH5s3YqNgvNL9Fqx0GdVB4YTcOL746ozj48u8klpUAkhpX/WQHeuCyzuPUW+QINQSnUxpaMAIVAmPJbr5lHgqvKnOGHzbHuVX+Fokh43goeuvxjMHINHR0Nq9k+g2yJgDIa1HOiK+TtNzDcWa/QiAZUYxOKptt/9MJfs8+fO2gyAL9AAuyLF+MiJ3xo21o39tHPduQ102rJvgWYhNgzgD26H7D1vnTLodLqh/uXZiD0tAl1nnCaAxk74cKut2DxdmVhpLyt8HpbMKI1kSfpuT1qEhBxTgT/eBSNj4kdKpZgs3eRqnkXzuY0udyTO2I4ckwzYijOQB80Jf/5hC1ovq1ukGgFtdBYY23zyw6/iNeBnsKtj3XYxL7ACRPtT8IgPL8H9xp30eepwubjBJQ0srdnmadgaV8lmdbt73r9/7PCSYc6rjsg0yTFQCDRR6ZiR+yoQCzvw9bjp4bhypXZMt/MF3KsKnxWycsMIkdBRiokVGjTfrc9v+36xPMBsILch5SGZKk+jVySBuNqzpvI5BwZ9vjLxZXupnUhl3K/JctgPtkx2jHLjuvhcJrmeE+1O6tRCC4="
+      - secure: "Ja0kT4MxisND20lg1+i1KBgJJKMQh9u+xBzguCzH+GWqKoshcPZEVMk9VwoXkY/6EBwavmG/YUjLoEfLEJUgC1TDNqE+QWiui1p+hpHxW+IjM3Gh0M4y9FHrGe/rdYicVajgNSNJJNJHNJQKVOT+v39Bq0PQgeac8YaR+i1wDXVqgV0r5b2FxWyWUv/q6xLkFmXQbsJ4HE+6332opqrnKYBY6poWoe0auI+Wwpjc0ndCU2EWTnCl77NO2Cy///zT+KnRGtQ4qOlbjfOA92kzBSpVoc8BI3F6f3Xx7hKIUmHOmn4MQ3Ccp/dVSZIR4giBIi8ML6EY3FckMlfKJItcB2o4sblrbiRRpLBx4kOV9+12o2aoaMp+wxJTNQL1Fhjjh1w9qDmnbKYUYhBgPXOIMmcmq9b4nyq1Ld/PqvT3iEax65WX0B70YYrkxAbDr2R2Reqa/xt81xlPWUBXcj4EJJr60OB4cYtekpPepbWsVSlXvEgAyxgJFZW2n3knHqZQA79bLij6RlWjUiD4n/M5g9iEy70wamcuGdan4Z1hRM+lXBAhazdrVV5wr0qshxfClwXmIskk1poh3yDV/NwvJgOPbEdur6iqGnYUnoVpQlWL68TiVbAvOkD296erHlswd6sB38GsDsoA76RS6TmE5ZrUVusitaJ6Oa2MMkcLcNI="
 
 
 matrix:
