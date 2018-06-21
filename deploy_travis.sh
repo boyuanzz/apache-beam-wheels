@@ -14,5 +14,5 @@ function deploy {
   echo $WHEELHOUSE_UPLOADER_USERNAME
   echo $TRAVIS_SECURE_ENV_VARS
   echo $WHEELHOUSE_UPLOADER_SECRET
-  svn commit --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
+  svn commit --username "$WHEELHOUSE_UPLOADER_USERNAME" --password "$WHEELHOUSE_UPLOADER_SECRET" -m "Upload python wheels"
 }
