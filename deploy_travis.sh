@@ -1,6 +1,7 @@
 # Define custom utilities for deploying on travis
 
 function deploy {
+  printenv
   cd ${TRAVIS_BUILD_DIR}/wheelhouse
   mkdir test_wheels 
   for artifact in *.*; do
