@@ -10,7 +10,7 @@ env:
   global:
       - RC=rc2
       - VERSION=2.5.0
-      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/python/
+      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/python
       - ZIP_FILE=apache-beam-${VERSION}-python.zip
 
       - PLAT=x86_64
