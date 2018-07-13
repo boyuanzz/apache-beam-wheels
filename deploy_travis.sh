@@ -7,8 +7,7 @@ function deploy {
   for artifact in *.*; do
     echo $artifact
     mv $artifact test_wheels/$artifact
-  cd test_wheels
-  svn add *
+    svn add test_wheels/$artifact
   done
   svn commit --non-interactive --no-auth-cache --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
 }
