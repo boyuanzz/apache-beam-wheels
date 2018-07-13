@@ -13,9 +13,9 @@ function deploy {
   mv ../test_wheels .
   svn add test_wheels
   echo $WHEELHOUSE_UPLOADER_USERNAME
-  echo "$WHEELHOUSE_UPLOADER_SECRET"
+  echo $WHEELHOUSE_UPLOADER_SECRET
   echo "print secret len"
   echo ${#WHEELHOUSE_UPLOADER_SECRET}
   echo ${#PASSWORD}
-  svn commit --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
+  svn commit --username $WHEELHOUSE_UPLOADER_USERNAME --password aaa -m "Upload python wheels"
 }
