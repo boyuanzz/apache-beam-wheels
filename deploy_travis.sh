@@ -1,14 +1,13 @@
 # Define custom utilities for deploying on travis
 
 function deploy {
-  cd ${TRAVIS_BUILD_DIR}
-  svn co https://dist.apache.org/repos/dist/dev/beam/2.4.0
-  cd wheelhouse
+  cd ${TRAVIS_BUILD_DIR}/wheelhouse
+  mkdir -p 2.4.0/test_wheels
   for artifact in *.*; do
     echo $artifact
-    mv $artifact ../2.4.0/test_wheels/$artifact
-    ls -lh ../2.4.0/test_wheels
-    svn add ../2.4.0/test_wheels/$artifact
+    mv $artifact 2.4.0/test_wheels/$artifact
   done
+  svn co https://dist.apache.org/repos/dist/dev/beam/2.4.0
+  svn add *
   svn commit --non-interactive --no-auth-cache --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
 }
