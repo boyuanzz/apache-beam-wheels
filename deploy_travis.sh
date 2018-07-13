@@ -3,7 +3,7 @@
 function deploy {
   svn co https://dist.apache.org/repos/dist/dev/beam/2.4.0/test_wheels
   cd test_wheels
-  for artifact in ../*.*; do
+  for artifact in ../wheelhouse/*.*; do
     echo $artifact
     svn add $artifact
   done
