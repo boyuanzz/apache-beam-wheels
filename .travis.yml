@@ -60,6 +60,7 @@ script:
     - build_wheel apache-beam-${VERSION} $PLAT
 
 after_success:
+    - TRAVIS_BUILD_DIR=.
     - ls -lh ${TRAVIS_BUILD_DIR}/wheelhouse/
     - pip install twine
     - pip install pyOpenSSL ndg-httpsclient pyasn1
