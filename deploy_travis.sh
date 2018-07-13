@@ -17,5 +17,5 @@ function deploy {
   echo "print secret len"
   echo ${#WHEELHOUSE_UPLOADER_SECRET}
   echo ${#PASSWORD}
-  svn commit --username "$WHEELHOUSE_UPLOADER_USERNAME" --password "$WHEELHOUSE_UPLOADER_SECRET" -m "Upload python wheels"
+  svn commit --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
 }
