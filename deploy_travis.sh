@@ -2,12 +2,13 @@
 
 function deploy {
   cd ${TRAVIS_BUILD_DIR}/wheelhouse
+  mkdir test_wheels
   svn co https://dist.apache.org/repos/dist/dev/beam/2.4.0/test_wheels
   for artifact in *.*; do
     echo $artifact
-    cd test_wheels
-    svn add ../$artifact
-    cd ..
+    mv $artifact test_wheels/$artifact
+  cd test_wheels
+  svn add *
   done
   svn commit --non-interactive --no-auth-cache --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
 }
