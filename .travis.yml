@@ -21,30 +21,31 @@ env:
       # travis encrypt -r robertwb/apache-beam-wheels WHEELHOUSE_UPLOADER_SECRET=$WHEELHOUSE_UPLOADER_SECRET
 #      - secure: "leFeL/Vs3EYS5/Q5+62pvJ/paKqkJkPfsFisRQuWR3xtMNa3xpuC1fsT6Cj0tPqgIG7BeYUGwjJCgPSy1bWRD1xfLbKshiYeAMnOl+1XpTbgI8DRK5eSszXaQRK4/n0cUycMJdrIbB9/3OnKIXtse50Te7gzOZ8q3jTXJXHJ9oIxs26kUy6x+CdpBu+dwsVqvn+Pw1MqedtigckxIsWEcVS+pLTzZjewadPpnS1kErbGxH3nGqXdg5ccaE9+c7vS0yG0+WMfFKgrcpAvGUV8xQRDaUjHpPSNWwEf3KitpxLNFb3gCIWxXmZgq8Nxs0DpIZYKvLJ5GYJgL19QwC6Fv5xT9EUX8Hhzqsl12y2koIRDWyKAHTkQm+VrZE67rH8RcoZ11mm+k6wDVRsFJgxr7xJk2/cix/uTljLlqYyCbzoCCGFpeSjhkDTT4CxF2KOeHNEx1jdowOaR/RMFmn6qq2N/HC1BalDQAVfqZ8OsYVCf5lr7XXEOfyoZxaLiLiPq8TzZApp/wXWCZdpb0DvymiHe/ogitpMQic2UzJHzcwJ+5/mboKbuhsD2DcQz1X5nCE6rRQNPOT7sDl6GmkXS1f2aJ+jtiVeC48tvq5K7Hjfh3Fk31nOQzqU9o12ylcRotO2NDtC2q5OPRVS4a5zIlTGc1N0xWmSWmEItdPfcJRs="
 
-exclude:
-  # Exclude the default Python 3.5 build
-  - python: 3.5
-include:
- - os: osx
-   language: generic
-   env:
-     - MB_PYTHON_VERSION=2.7
- - os: linux
-   env:
-     - MB_PYTHON_VERSION=2.7
- - os: linux
-   env:
-     - MB_PYTHON_VERSION=2.7
-     - UNICODE_WIDTH=16
- - os: linux
-   env:
-     - MB_PYTHON_VERSION=2.7
-     - PLAT=i686
- - os: linux
-   env:
-     - MB_PYTHON_VERSION=2.7
-     - PLAT=i686
-     - UNICODE_WIDTH=16
+matrix:
+  exclude:
+    # Exclude the default Python 3.5 build
+    - python: 3.5
+  include:
+   - os: osx
+     language: generic
+     env:
+       - MB_PYTHON_VERSION=2.7
+   - os: linux
+     env:
+       - MB_PYTHON_VERSION=2.7
+   - os: linux
+     env:
+       - MB_PYTHON_VERSION=2.7
+       - UNICODE_WIDTH=16
+   - os: linux
+     env:
+       - MB_PYTHON_VERSION=2.7
+       - PLAT=i686
+   - os: linux
+     env:
+       - MB_PYTHON_VERSION=2.7
+       - PLAT=i686
+       - UNICODE_WIDTH=16
 
 before_install:
     - source multibuild/common_utils.sh
