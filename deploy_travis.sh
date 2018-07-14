@@ -3,7 +3,7 @@
 function deploy {
   cd ${TRAVIS_BUILD_DIR}/wheelhouse
   mkdir -p 2.4.0/test_wheels
-  for artifact in *.*; do
+  for artifact in *.whl; do
     echo $artifact
     mv $artifact 2.4.0/test_wheels/$artifact
   done
