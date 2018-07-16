@@ -10,7 +10,9 @@ env:
   global:
       - RC=rc2
       - VERSION=2.5.0
-      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/python
+      - PYTHON_ARTIFACTS_DIR=python
+      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/${PYTHON_ARTIFACTS_DIR}
+      - BEAM_SVN_DIR=https://dist.apache.org/repos/dist/dev/beam
       - ZIP_FILE=apache-beam-${VERSION}.zip
 
       - PLAT=x86_64
@@ -37,10 +39,10 @@ matrix:
      env:
        - MB_PYTHON_VERSION=2.7
        - UNICODE_WIDTH=16
-#   - os: linux
-#     env:
-#       - MB_PYTHON_VERSION=2.7
-#       - PLAT=i686
+   - os: linux
+     env:
+       - MB_PYTHON_VERSION=2.7
+       - PLAT=i686
    - os: linux
      env:
        - MB_PYTHON_VERSION=2.7
@@ -61,8 +63,6 @@ script:
 
 after_success:
     - ls -lh ${TRAVIS_BUILD_DIR}/wheelhouse/
-    - pip install twine
-    - pip install pyOpenSSL ndg-httpsclient pyasn1
     # Even the test pipy won't let you re-upload a pacakge under the same name.
     - |
       for artifact in ${TRAVIS_BUILD_DIR}/wheelhouse/*.*; do
