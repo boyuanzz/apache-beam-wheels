@@ -1,3 +1,4 @@
+
 language: python
 python: 3.5
 sudo: required
@@ -7,19 +8,21 @@ osx_image: xcode6.4
 
 env:
   global:
-      - RC=rc3
-      - VERSION=2.4.0
-      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/
-      - ZIP_FILE=apache-beam-${VERSION}-python.zip
+      - RC=rc2
+      - VERSION=2.5.0
+      - PYTHON_ARTIFACTS_DIR=python
+      - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/${PYTHON_ARTIFACTS_DIR}
+      - BEAM_SVN_DIR=https://dist.apache.org/repos/dist/dev/beam
+      - ZIP_FILE=apache-beam-${VERSION}.zip
 
       - PLAT=x86_64
-      - WHEELHOUSE_UPLOADER_USERNAME=apache-beam-travis
+      # Put your apache user name here
+      - WHEELHOUSE_UPLOADER_USERNAME=
       - BUILD_DEPENDS="Cython"
       - TEST_DEPENDS=
-      # Following generated with
+      # Put your apache password here, encrypted with
       # travis encrypt -r robertwb/apache-beam-wheels WHEELHOUSE_UPLOADER_SECRET=$WHEELHOUSE_UPLOADER_SECRET
-      - secure: "F4w+VJHE1Lor/RQKzg5+RtvtD0qKf7dBA0egQRjLokFC/grBE21NraQmy0bkmLMmk2CXd8eMiWyWI4hxrMFQitMPBxT4r0rzhF3UVOH5s3YqNgvNL9Fqx0GdVB4YTcOL746ozj48u8klpUAkhpX/WQHeuCyzuPUW+QINQSnUxpaMAIVAmPJbr5lHgqvKnOGHzbHuVX+Fokh43goeuvxjMHINHR0Nq9k+g2yJgDIa1HOiK+TtNzDcWa/QiAZUYxOKptt/9MJfs8+fO2gyAL9AAuyLF+MiJ3xo21o39tHPduQ102rJvgWYhNgzgD26H7D1vnTLodLqh/uXZiD0tAl1nnCaAxk74cKut2DxdmVhpLyt8HpbMKI1kSfpuT1qEhBxTgT/eBSNj4kdKpZgs3eRqnkXzuY0udyTO2I4ckwzYijOQB80Jf/5hC1ovq1ukGgFtdBYY23zyw6/iNeBnsKtj3XYxL7ACRPtT8IgPL8H9xp30eepwubjBJQ0srdnmadgaV8lmdbt73r9/7PCSYc6rjsg0yTFQCDRR6ZiR+yoQCzvw9bjp4bhypXZMt/MF3KsKnxWycsMIkdBRiokVGjTfrc9v+36xPMBsILch5SGZKk+jVySBuNqzpvI5BwZ9vjLxZXupnUhl3K/JctgPtkx2jHLjuvhcJrmeE+1O6tRCC4="
-
+      - secure: "leFeL/Vs3EYS5/Q5+62pvJ/paKqkJkPfsFisRQuWR3xtMNa3xpuC1fsT6Cj0tPqgIG7BeYUGwjJCgPSy1bWRD1xfLbKshiYeAMnOl+1XpTbgI8DRK5eSszXaQRK4/n0cUycMJdrIbB9/3OnKIXtse50Te7gzOZ8q3jTXJXHJ9oIxs26kUy6x+CdpBu+dwsVqvn+Pw1MqedtigckxIsWEcVS+pLTzZjewadPpnS1kErbGxH3nGqXdg5ccaE9+c7vS0yG0+WMfFKgrcpAvGUV8xQRDaUjHpPSNWwEf3KitpxLNFb3gCIWxXmZgq8Nxs0DpIZYKvLJ5GYJgL19QwC6Fv5xT9EUX8Hhzqsl12y2koIRDWyKAHTkQm+VrZE67rH8RcoZ11mm+k6wDVRsFJgxr7xJk2/cix/uTljLlqYyCbzoCCGFpeSjhkDTT4CxF2KOeHNEx1jdowOaR/RMFmn6qq2N/HC1BalDQAVfqZ8OsYVCf5lr7XXEOfyoZxaLiLiPq8TzZApp/wXWCZdpb0DvymiHe/ogitpMQic2UzJHzcwJ+5/mboKbuhsD2DcQz1X5nCE6rRQNPOT7sDl6GmkXS1f2aJ+jtiVeC48tvq5K7Hjfh3Fk31nOQzqU9o12ylcRotO2NDtC2q5OPRVS4a5zIlTGc1N0xWmSWmEItdPfcJRs="
 
 matrix:
   exclude:
@@ -60,10 +63,7 @@ script:
     - build_wheel apache-beam-${VERSION} $PLAT
 
 after_success:
-    - TRAVIS_BUILD_DIR=.
     - ls -lh ${TRAVIS_BUILD_DIR}/wheelhouse/
-    - pip install twine
-    - pip install pyOpenSSL ndg-httpsclient pyasn1
     # Even the test pipy won't let you re-upload a pacakge under the same name.
     - |
       for artifact in ${TRAVIS_BUILD_DIR}/wheelhouse/*.*; do

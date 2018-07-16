@@ -1,16 +1,14 @@
 # Define custom utilities for deploying on travis
 
 function deploy {
-    # Config pypirc
-    echo "[distutils]" > ~/.pypirc
-    echo "index-servers=" >> ~/.pypirc
-    echo "    test" >> ~/.pypirc
-    echo "" >> ~/.pypirc
-    echo "[test]" >> ~/.pypirc
-    echo "repository = https://test.pypi.org/legacy/" >> ~/.pypirc
-    echo "username = $WHEELHOUSE_UPLOADER_USERNAME" >> ~/.pypirc
-    echo "password = $WHEELHOUSE_UPLOADER_SECRET" >> ~/.pypirc
-
-    # Upload
-    twine upload -r test $TRAVIS_BUILD_DIR/wheelhouse/*
+  cd ${TRAVIS_BUILD_DIR}/wheelhouse
+  svn co ${BEAM_SVN_DIR}/${VERSION}
+  for artifact in *.whl; do
+    echo $artifact
+    mv $artifact ${VERSION}/${PYTHON_ARTIFACTS_DIR}/$artifact
+    svn add ${VERSION}/${PYTHON_ARTIFACTS_DIR}/$artifact
+    cd ${VERSION}
+    svn commit --non-interactive --no-auth-cache --username $WHEELHOUSE_UPLOADER_USERNAME --password "$WHEELHOUSE_UPLOADER_SECRET" -m "Upload python wheels"
+    cd ..
+  done
 }
