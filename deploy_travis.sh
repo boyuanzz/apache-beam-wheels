@@ -8,7 +8,7 @@ function deploy {
     mv $artifact 2.4.0/test_wheels/$artifact
     svn add 2.4.0/test_wheels/$artifact
     cd 2.4.0
-    svn commit --non-interactive --no-auth-cache --username $WHEELHOUSE_UPLOADER_USERNAME --password $WHEELHOUSE_UPLOADER_SECRET -m "Upload python wheels"
+    svn commit --non-interactive --no-auth-cache --username $WHEELHOUSE_UPLOADER_USERNAME --password "$WHEELHOUSE_UPLOADER_SECRET" -m "Upload python wheels"
     cd ..
   done
 }
