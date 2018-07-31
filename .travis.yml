@@ -8,8 +8,8 @@ osx_image: xcode6.4
 
 env:
   global:
-      - RC=rc2
-      - VERSION=2.5.0
+      - RC=rc1
+      - VERSION=2.6.0
       - PYTHON_ARTIFACTS_DIR=python
       - STAGING=https://dist.apache.org/repos/dist/dev/beam/${VERSION}/${PYTHON_ARTIFACTS_DIR}
       - BEAM_SVN_DIR=https://dist.apache.org/repos/dist/dev/beam
